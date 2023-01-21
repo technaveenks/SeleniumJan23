@@ -3,28 +3,40 @@ package com.sira.learning.automation.SeleniumJan23.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class HomePage {
-	WebDriver driver;
+public class HomePage extends BasePage {
+
 	// Constructor
 	public HomePage(WebDriver driver) {
-		this.driver= driver;
-		PageFactory.initElements(driver, this);
+		super(driver);
 	}
-	
+
 	// Locators
-	@FindBy(id="searchDropdownBox")
+	@FindBy(id = "searchDropdownBox")
 	private WebElement _dropDownSearch;
-	
-	//Actions
+
+	@FindBy(id = "twotabsearchtextbox")
+	private WebElement _txtSearchBox;
+
+	@FindBy(id = "nav-search-submit-button")
+	private WebElement _btnSearch;
+
+	// Actions
 	public void selectDropdownValues(String value) {
 		Select select = new Select(_dropDownSearch);
-        select.selectByVisibleText(value);
+		select.selectByVisibleText(value);
 	}
-	
-	
+
+	public void enterSearchItem(String value) {
+		_txtSearchBox.clear();
+		_txtSearchBox.sendKeys(value);
+	}
+
+	public SearchResultsPage clickOnSearchButton() {
+		_btnSearch.click();
+		return new SearchResultsPage(getDriver());
+	}
 
 }
 
@@ -33,7 +45,7 @@ public class HomePage {
  * Select select = new Select(selectElement);
  * select.selectByVisibleText("Amazon Pharmacy");
  */
- 
+
 /*
  * driver.findElement(By.id("twotabsearchtextbox")).sendKeys("iPhone");
  * driver.findElement(By.id("nav-search-submit-button")).click();
